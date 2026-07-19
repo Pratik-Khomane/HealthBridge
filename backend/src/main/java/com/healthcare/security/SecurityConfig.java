@@ -61,7 +61,12 @@ public class SecurityConfig {
                 .requestMatchers("/api/doctor-schedules/**").authenticated() // Allows authenticated access to all doctor schedule endpoints
                 .requestMatchers("/api/appointments/**").authenticated() // Require authentication for all appointment endpoints
                 .requestMatchers("/api/medical-records/**").authenticated() // Require authentication for all medical record endpoints
-                .requestMatchers("/api/feedback/**").authenticated() // Require authentication for all feedback endpoints
+                .requestMatchers("/api/feedback/**").authenticated()
+                    .requestMatchers(
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html"
+                    ).permitAll()// Require authentication for all feedback endpoints
                 .anyRequest().authenticated() // All other requests require authentication
             )
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class) // Add JWT filter
